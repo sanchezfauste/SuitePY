@@ -83,11 +83,15 @@ class SuiteCRM(object):
         except:
             return False
 
-    def get_bean(self, module_name, id):
+    def get_bean(self, module_name, id, select_fields = '',
+            link_name_to_fields_array = '', track_view = ''):
         parameters = OrderedDict()
         parameters['session'] = self._session_id
         parameters['module_name'] = module_name
         parameters['id'] = id
+        parameters['select_fields'] = select_fields
+        parameters['link_name_to_fields_array'] = link_name_to_fields_array
+        parameters['track_view'] = track_view
         result = self._request('get_entry', parameters)
         if (self._get_bean_failed(result)):
             error_msg = result['entry_list'][0]['name_value_list'][0]['value']
