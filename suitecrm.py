@@ -102,12 +102,20 @@ class SuiteCRM(object):
         result = self._request('set_entry', parameters)
         bean._set_name_value_list(result['entry_list'])
 
-    def get_bean_list(self, module_name, query = '', order_by = ''):
+    def get_bean_list(self, module_name, query = '', order_by = '',
+            offset = '', select_fields = '', link_name_to_fields_array = '',
+            max_results = '', deleted = '', favorites = ''):
         parameters = OrderedDict()
         parameters['session'] = self._session_id
         parameters['module_name'] = module_name
         parameters['query'] = query
         parameters['order_by'] = order_by
+        parameters['offset'] = offset
+        parameters['select_fields'] = select_fields
+        parameters['link_name_to_fields_array'] = link_name_to_fields_array
+        parameters['max_results'] = max_results
+        parameters['deleted'] = deleted
+        parameters['favorites'] = favorites
         result = self._request('get_entry_list', parameters)
         bean_list = []
         for entry in result['entry_list']:
