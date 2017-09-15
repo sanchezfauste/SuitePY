@@ -23,6 +23,8 @@ import hashlib
 import json
 from collections import OrderedDict
 from suite_exceptions import *
+from bean import Bean
+from bean_exceptions import *
 
 class SuiteCRM(object):
 
@@ -32,6 +34,7 @@ class SuiteCRM(object):
         self._password = password
         self._application_name = application_name
         self._verify_ssl = True
+        self._login()
 
     def _call(self, method, parameters):
         data = {
@@ -46,6 +49,13 @@ class SuiteCRM(object):
         if (self._call_failed(response)):
             raise SuiteException.get_suite_exception(response)
         return response
+
+    def _request(self, method, parameters):
+        try:
+            return self._call(method, parameters)
+        except InvalidSessionIDException:
+            self._login()
+            return self._call(method, parameters)
 
     @staticmethod
     def _call_failed(result):
@@ -65,3 +75,21 @@ class SuiteCRM(object):
     @staticmethod
     def _md5(input):
         return hashlib.md5(input.encode('utf8')).hexdigest()
+
+    @staticmethod
+    def _get_bean_failed(result):
+        try:
+            return result['entry_list'][0]['name_value_list'][0]['name'] == 'warning'
+        except:
+            return False
+
+    def get_bean(self, module_name, id):
+        parameters = OrderedDict()
+        parameters['session'] = self._session_id
+        parameters['module_name'] = module_name
+        parameters['id'] = id
+        result = self._request('get_entry', parameters)
+        if (self._get_bean_failed(result)):
+            error_msg = result['entry_list'][0]['name_value_list'][0]['value']
+            raise BeanNotFoundException(error_msg)
+        return Bean(module_name, result['entry_list'][0]['name_value_list'])
