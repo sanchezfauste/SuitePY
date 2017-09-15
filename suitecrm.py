@@ -93,3 +93,11 @@ class SuiteCRM(object):
             error_msg = result['entry_list'][0]['name_value_list'][0]['value']
             raise BeanNotFoundException(error_msg)
         return Bean(module_name, result['entry_list'][0]['name_value_list'])
+
+    def save_bean(self, bean):
+        parameters = OrderedDict()
+        parameters['session'] = self._session_id
+        parameters['module_name'] = bean.module
+        parameters['name_value_list'] = bean.name_value_list
+        result = self._request('set_entry', parameters)
+        bean._set_name_value_list(result['entry_list'])
