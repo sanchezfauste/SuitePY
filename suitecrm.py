@@ -132,3 +132,11 @@ class SuiteCRM(object):
         parameters['filter'] = filter
         result = self._request('get_available_modules', parameters)
         return result
+
+    def get_module_fields(self, module_name, fields = ''):
+        parameters = OrderedDict()
+        parameters['session'] = self._session_id
+        parameters['module_name'] = module_name
+        parameters['fields'] = fields
+        result = self._request('get_module_fields', parameters)
+        return result
