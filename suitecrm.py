@@ -125,3 +125,10 @@ class SuiteCRM(object):
         for entry in result['entry_list']:
             bean_list.append(Bean(module_name, entry['name_value_list']))
         return bean_list
+
+    def get_available_modules(self, filter = 'default'):
+        parameters = OrderedDict()
+        parameters['session'] = self._session_id
+        parameters['filter'] = filter
+        result = self._request('get_available_modules', parameters)
+        return result
