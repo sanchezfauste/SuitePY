@@ -25,16 +25,24 @@ from collections import OrderedDict
 from suite_exceptions import *
 from bean import Bean
 from bean_exceptions import *
+from config import Config
 
-class SuiteCRM(object):
+class Singleton(object):
 
-    def __init__(self, url, username, password, application_name = 'Suite PY'):
-        self._url = url
-        self._username = username
-        self._password = password
-        self._application_name = application_name
-        self._verify_ssl = True
-        self._login()
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = object.__new__(cls, *args, **kwargs)
+        return cls._instance
+
+class SuiteCRM(Singleton):
+
+    conf = Config()
+    _session_id = None
+
+    def __init__(self):
+        if not self._session_id: self._login()
 
     def _call(self, method, parameters):
         data = {
@@ -43,7 +51,7 @@ class SuiteCRM(object):
             'response_type' : 'JSON',
             'rest_data' : json.dumps(parameters),
         }
-        r = requests.post(self._url, data = data, verify = self._verify_ssl)
+        r = requests.post(self.conf.url, data = data, verify = self.conf.verify_ssl)
         r.raise_for_status()
         response = json.loads(r.text)
         if (self._call_failed(response)):
@@ -55,20 +63,21 @@ class SuiteCRM(object):
             return self._call(method, parameters)
         except InvalidSessionIDException:
             self._login()
+            parameters['session'] = self._session_id
             return self._call(method, parameters)
 
     @staticmethod
     def _call_failed(result):
-        return len(result) == 3 and 'name' in result \
-                and 'description' in result and 'number' in result
+        return not result or (len(result) == 3 and 'name' in result \
+                and 'description' in result and 'number' in result)
 
     def _login(self):
         login_parameters = OrderedDict()
         login_parameters['user_auth'] = {
-            'user_name' : self._username,
-            'password' : self._md5(self._password)
+            'user_name' : self.conf.username,
+            'password' : self._md5(self.conf.password)
         }
-        login_parameters['application_name'] = self._application_name
+        login_parameters['application_name'] = self.conf.application_name
         login_result = self._call('login', login_parameters)
         self._session_id = login_result['id']
 
