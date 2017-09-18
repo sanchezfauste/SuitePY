@@ -21,15 +21,21 @@
 class SuiteException(Exception):
 
     def __init__(self, data):
-        self.name = data['name']
-        self.description = data['description']
-        self.number = data['number']
+        if data:
+            self.name = data['name']
+            self.description = data['description']
+            self.number = data['number']
+        else:
+            self.name = "UnknownSuiteException"
+            self.description = "Unknown error"
+            self.number = 1012
 
     def __str__(self):
         return self.name + ': ' + self.description
 
     @staticmethod
     def get_suite_exception(result):
+        if not result: return UnknownSuiteException(result)
         if result['number'] == 0: return NoErrorException(result)
         if result['number'] == 10: return InvalidLoginException(result)
         if result['number'] == 11: return InvalidSessionIDException(result)
