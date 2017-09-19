@@ -23,7 +23,7 @@ import os.path
 
 class Config:
 
-    def __init__(self, config_file = "config.ini"):
+    def __init__(self, config_file = "suitepy.ini"):
         if os.path.isfile(config_file):
             print("Loading config from file: " + config_file)
             self.load_config_file(config_file)
