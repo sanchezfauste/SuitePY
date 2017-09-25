@@ -45,6 +45,10 @@ class Bean(object):
             name_value_list.append({'name' : name, 'value' : value})
         return name_value_list
 
+    @property
+    def fields(self):
+        return self._fields.keys()
+
     def __str__(self):
         string = self.module + '\n'
         for key, value in self._fields.items():
