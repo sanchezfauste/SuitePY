@@ -53,7 +53,7 @@ class SuiteCRM(Singleton):
         }
         r = requests.post(self.conf.url, data = data, verify = self.conf.verify_ssl)
         r.raise_for_status()
-        response = json.loads(r.text)
+        response = json.loads(r.text, object_pairs_hook=OrderedDict)
         if (self._call_failed(response)):
             raise SuiteException.get_suite_exception(response)
         return response
