@@ -133,7 +133,18 @@ class SuiteCRM(Singleton):
         bean_list = []
         for entry in result['entry_list']:
             bean_list.append(Bean(module_name, entry['name_value_list']))
-        return bean_list
+        previous_offset = None
+        if offset and max_results and offset - max_results >= 0:
+            previous_offset = offset - max_results
+        return {
+            "result_count" : result['result_count'],
+            "total_count" : result['total_count'],
+            "previous_offset" : previous_offset,
+            "current_offset" : offset if offset else 0,
+            "next_offset" : result['next_offset'],
+            "current_limit" : max_results,
+            "entry_list" : bean_list
+        }
 
     def get_available_modules(self, filter = 'default'):
         parameters = OrderedDict()
