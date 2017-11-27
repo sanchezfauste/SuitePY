@@ -136,12 +136,18 @@ class SuiteCRM(Singleton):
         previous_offset = None
         if offset and max_results and offset - max_results >= 0:
             previous_offset = offset - max_results
+        next_offset = None
+        try:
+            if int(result['next_offset']) < int(result['total_count']):
+                next_offset = result['next_offset']
+        except:
+            pass
         return {
             "result_count" : result['result_count'],
             "total_count" : result['total_count'],
             "previous_offset" : previous_offset,
             "current_offset" : offset if offset else 0,
-            "next_offset" : result['next_offset'],
+            "next_offset" : next_offset,
             "current_limit" : max_results,
             "entry_list" : bean_list
         }
