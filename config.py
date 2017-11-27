@@ -24,13 +24,18 @@ import os.path
 class Config:
 
     def __init__(self, config_file = "suitepy.ini"):
-        if os.path.isfile(config_file):
-            print("Loading config from file: " + config_file)
-            self.load_config_file(config_file)
+        if os.path.isabs(config_file):
+            abs_path = config_file
         else:
-            print("Creating new config file on: " + config_file)
+            BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+            abs_path = os.path.join(BASE_DIR, config_file)
+        if os.path.isfile(abs_path):
+            print("Loading config from file: " + abs_path)
+            self.load_config_file(abs_path)
+        else:
+            print("Creating new config file on: " + abs_path)
             print("Please edit config file and rerun the application.")
-            self.create_config_file(config_file)
+            self.create_config_file(abs_path)
             exit(0)
 
     def load_config_file(self, config_file):
