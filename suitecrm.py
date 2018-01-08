@@ -166,3 +166,28 @@ class SuiteCRM(Singleton):
         parameters['fields'] = fields
         result = self._request('get_module_fields', parameters)
         return result
+
+    def get_relationships(self, module_name, module_id, link_field_name,
+            related_module_query = '', related_fields = [], 
+            related_module_link_name_to_fields_array = [], deleted = False, 
+            order_by = '', offset = '', limit = ''):
+        parameters = OrderedDict()
+        parameters['session'] = self._session_id
+        parameters['module_name'] = module_name
+        parameters['module_id'] = module_id
+        parameters['link_field_name'] = link_field_name
+        parameters['related_module_query'] = related_module_query
+        parameters['related_fields'] = related_fields
+        parameters['related_module_link_name_to_fields_array'] = related_module_link_name_to_fields_array
+        parameters['deleted'] = deleted
+        parameters['order_by'] = order_by
+        parameters['offset'] = offset
+        parameters['limit'] = limit
+        result = self._request('get_relationships', parameters)
+        bean_list = []
+        for entry in result['entry_list']:
+            bean_list.append(Bean(entry['module_name'], entry['name_value_list']))
+        return {
+            "relationship_list" : result['relationship_list'],
+            "entry_list" : bean_list
+        }
