@@ -54,3 +54,8 @@ class Bean(object):
         for key, value in self._fields.items():
             string += '\t' + str(key) + ': ' + str(value) + '\n'
         return string
+
+    def show(self):
+        print self.module
+        for key, value in self._fields.items():
+            print '\t', key, ':', value
