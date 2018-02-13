@@ -187,7 +187,13 @@ class SuiteCRM(Singleton):
         bean_list = []
         for entry in result['entry_list']:
             bean_list.append(Bean(entry['module_name'], entry['name_value_list']))
+        previous_offset = None
+        if offset and limit and offset - limit >= 0:
+            previous_offset = offset - limit
         return {
             "relationship_list" : result['relationship_list'],
-            "entry_list" : bean_list
+            "entry_list" : bean_list,
+            "previous_offset" : previous_offset,
+            "current_offset" : offset if offset else 0,
+            "current_limit" : limit
         }
