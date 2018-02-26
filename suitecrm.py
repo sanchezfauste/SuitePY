@@ -105,7 +105,11 @@ class SuiteCRM(Singleton):
         if (self._get_bean_failed(result)):
             error_msg = result['entry_list'][0]['name_value_list'][0]['value']
             raise BeanNotFoundException(error_msg)
-        return Bean(module_name, result['entry_list'][0]['name_value_list'])
+        return Bean(
+            module_name,
+            result['entry_list'][0]['name_value_list'],
+            result['relationship_list'][0] if len(result['relationship_list']) > 0 else []
+        )
 
     def save_bean(self, bean):
         parameters = OrderedDict()
@@ -185,13 +189,18 @@ class SuiteCRM(Singleton):
         parameters['limit'] = limit
         result = self._request('get_relationships', parameters)
         bean_list = []
-        for entry in result['entry_list']:
-            bean_list.append(Bean(entry['module_name'], entry['name_value_list']))
+        for i, entry in enumerate(result['entry_list']):
+            bean_list.append(
+                Bean(
+                    entry['module_name'],
+                    entry['name_value_list'],
+                    result['relationship_list'][i] if len(result['relationship_list']) > i else []
+                )
+            )
         previous_offset = None
         if offset and limit and offset - limit >= 0:
             previous_offset = offset - limit
         return {
-            "relationship_list" : result['relationship_list'],
             "entry_list" : bean_list,
             "previous_offset" : previous_offset,
             "current_offset" : offset if offset else 0,

@@ -20,18 +20,32 @@
 
 class Bean(object):
 
-    def __init__(self, module, name_value_list = {}):
+    def __init__(self, module, name_value_list = {}, relationship_list = []):
         self.module = module
         self._fields = {}
         self._set_name_value_list(name_value_list)
+        self._relationship_list = {}
+        self._set_relationship_list(relationship_list)
 
     def _set_name_value_list(self, name_value_list):
         for key, value in name_value_list.items():
             self._fields[value['name']] = value['value']
 
+    def _set_relationship_list(self, relationship_list):
+        for relationship in relationship_list:
+            records = []
+            for record in relationship['records']:
+                record_map = {}
+                for key, value in record.items():
+                    record_map[key] = value['value']
+                records.append(record_map)
+            self._relationship_list[relationship['name']] = records
+
     def __getitem__(self, field_name):
         if field_name in self._fields:
             return self._fields[field_name]
+        elif field_name in self._relationship_list:
+            return self._relationship_list[field_name]
         else:
             return ''
 
@@ -59,3 +73,9 @@ class Bean(object):
         print self.module
         for key, value in self._fields.items():
             print '\t', key, ':', value
+        for relationship, records in self._relationship_list.items():
+            print '\t', relationship, ':'
+            for record in records:
+                for key, value in record.items():
+                    print '\t\t', key, ':', value
+                print '\t\t---- ---- ---- ---- ---- ---- ---- ----'
