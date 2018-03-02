@@ -206,3 +206,9 @@ class SuiteCRM(Singleton):
             "current_offset" : offset if offset else 0,
             "current_limit" : limit
         }
+
+    def get_note_attachment(self, note_id):
+        parameters = OrderedDict()
+        parameters['session'] = self._session_id
+        parameters['id'] = note_id
+        return self._request('get_note_attachment', parameters)
