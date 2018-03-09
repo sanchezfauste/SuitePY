@@ -118,6 +118,7 @@ class SuiteCRM(Singleton):
         parameters['name_value_list'] = bean.name_value_list
         result = self._request('set_entry', parameters)
         bean._set_name_value_list(result['entry_list'])
+        bean['id'] = result['id']
 
     def get_bean_list(self, module_name, query = '', order_by = '',
             offset = '', select_fields = '', link_name_to_fields_array = '',
@@ -212,3 +213,13 @@ class SuiteCRM(Singleton):
         parameters['session'] = self._session_id
         parameters['id'] = note_id
         return self._request('get_note_attachment', parameters)
+
+    def set_note_attachment(self, note_id, filename, file):
+        parameters = OrderedDict()
+        parameters['session'] = self._session_id
+        parameters['note'] = {
+            'id' : note_id,
+            'filename' : filename,
+            'file' : file
+        }
+        return self._request('set_note_attachment', parameters)
