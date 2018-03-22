@@ -93,3 +93,4 @@ class SuiteCRMCached(SuiteCRM):
 
     def clear_cache(self):
         self._cache.clear()
+        self._cache_accessed.clear()
