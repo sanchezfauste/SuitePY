@@ -175,7 +175,7 @@ class SuiteCRM(Singleton):
     def get_relationships(self, module_name, module_id, link_field_name,
             related_module_query = '', related_fields = [], 
             related_module_link_name_to_fields_array = [], deleted = False, 
-            order_by = '', offset = '', limit = ''):
+            order_by = '', offset = '', limit = '', reverse_order = False):
         parameters = OrderedDict()
         parameters['session'] = self._session_id
         parameters['module_name'] = module_name
@@ -198,6 +198,8 @@ class SuiteCRM(Singleton):
                     result['relationship_list'][i] if len(result['relationship_list']) > i else []
                 )
             )
+        if reverse_order:
+            bean_list.reverse()
         previous_offset = None
         if offset and limit and offset - limit >= 0:
             previous_offset = offset - limit
