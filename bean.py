@@ -63,6 +63,10 @@ class Bean(object):
     def fields(self):
         return self._fields.keys()
 
+    @property
+    def json(self):
+        return self._fields.copy()
+
     def __str__(self):
         string = self.module + '\n'
         for key, value in self._fields.items():
