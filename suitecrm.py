@@ -208,6 +208,18 @@ class SuiteCRM(Singleton):
             "current_limit" : limit
         }
 
+    def set_relationship(self, module_name, module_id, link_field_name,
+            related_ids, name_value_list = [], delete = False):
+        parameters = OrderedDict()
+        parameters['session'] = self._session_id
+        parameters['module_name'] = module_name
+        parameters['module_id'] = module_id
+        parameters['link_field_name'] = link_field_name
+        parameters['related_ids'] = related_ids
+        parameters['name_value_list'] = name_value_list
+        parameters['delete'] = delete
+        return self._request('set_relationship', parameters)
+
     def get_note_attachment(self, note_id):
         parameters = OrderedDict()
         parameters['session'] = self._session_id
