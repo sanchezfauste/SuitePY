@@ -26,15 +26,8 @@ from suite_exceptions import *
 from bean import Bean
 from bean_exceptions import *
 from config import Config
+from singleton import Singleton
 
-class Singleton(object):
-
-    _instance = None
-
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = object.__new__(cls, *args, **kwargs)
-        return cls._instance
 
 class SuiteCRM(Singleton):
 
