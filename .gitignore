@@ -102,3 +102,6 @@ ENV/
 
 # Config files
 *.ini
+
+# PyCharm files
+.idea/
