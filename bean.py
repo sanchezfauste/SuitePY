@@ -54,6 +54,12 @@ class Bean(object):
 
     @property
     def name_value_list(self):
+        """
+        Get name value list of bean fields.
+
+        :return: name value list of bean fields.
+        :rtype: list[dict]
+        """
         name_value_list = []
         for name, value in self._fields.items():
             name_value_list.append({'name' : name, 'value' : value})
@@ -61,10 +67,22 @@ class Bean(object):
 
     @property
     def fields(self):
+        """
+        Get list of bean fields.
+
+        :return: list with bean fields.
+        :rtype: list[str]
+        """
         return self._fields.keys()
 
     @property
     def json(self):
+        """
+        Get JSON representation of bean.
+
+        :return: key value dictionary containing all bean fields.
+        :rtype: dict[str, object]
+        """
         return self._fields.copy()
 
     def __str__(self):
@@ -74,6 +92,7 @@ class Bean(object):
         return string
 
     def show(self):
+        """Prints a representation of bean information."""
         print self.module
         for key, value in self._fields.items():
             print '\t', key, ':', value

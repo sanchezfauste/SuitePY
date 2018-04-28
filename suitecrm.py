@@ -30,6 +30,9 @@ from singleton import Singleton
 
 
 class SuiteCRM(Singleton):
+    """
+    This class contains methods to interact with a SuiteCRM instance.
+    """
 
     conf = Config()
     _session_id = None
@@ -87,6 +90,21 @@ class SuiteCRM(Singleton):
 
     def get_bean(self, module_name, id, select_fields = '',
             link_name_to_fields_array = '', track_view = ''):
+        """
+        Retrieve a single Bean based on ID.
+
+        :param str module_name: name of the module to return record from.
+        :param str id: bean id.
+        :param list[str] select_fields: list of the fields to be included in the results.
+            This optional parameter allows for only needed fields to be retrieved.
+        :param list[dict] link_name_to_fields_array: a list of link_names and for each link_name,
+            what fields value to be returned.
+        :param bool track_view: should we track the record accessed.
+        :return: Bean object matching the selection criteria.
+        :rtype: Bean
+        :raises BeanNotFoundException: if the Bean is not found.
+        :raises SuiteException: if error when retrieving bean from SuiteCRM instance.
+        """
         parameters = OrderedDict()
         parameters['session'] = self._session_id
         parameters['module_name'] = module_name
@@ -105,6 +123,12 @@ class SuiteCRM(Singleton):
         )
 
     def save_bean(self, bean):
+        """
+        Saves a Bean object to SuiteCRM.
+
+        :param Bean bean: Bean object.
+        :raises SuiteException: if error when saving Bean to SuiteCRM instance.
+        """
         parameters = OrderedDict()
         parameters['session'] = self._session_id
         parameters['module_name'] = bean.module
@@ -116,6 +140,26 @@ class SuiteCRM(Singleton):
     def get_bean_list(self, module_name, query = '', order_by = '',
             offset = '', select_fields = '', link_name_to_fields_array = '',
             max_results = '', deleted = '', favorites = ''):
+        """
+        Get list of beans matching criteria.
+
+        :param str module_name: name of the module to return records from.
+        :param str query: SQL WHERE clause without the word 'WHERE'.
+        :param str order_by: SQL ORDER BY clause without the phrase 'ORDER BY'.
+        :param int offset: the record offset to start from.
+        :param list[str] select_fields: a list of the fields to be included in the results.
+            This optional parameter allows for only needed fields to be retrieved.
+        :param list[dict] link_name_to_fields_array: a list of link_names and for each link_name,
+            what fields value to be returned.
+        :param int max_results: the maximum number of records to return.
+            The default is the sugar configuration value for 'list_max_entries_per_page'.
+        :param bool deleted: False if deleted records should not be include,
+            True if deleted records should be included.
+        :param bool favorites: True if only favorites should be included, False otherwise.
+        :return: dict containing results matching criteria.
+        :rtype: dict[str, object]
+        :raises SuiteException: if error when retrieving beans from SuiteCRM instance.
+        """
         parameters = OrderedDict()
         parameters['session'] = self._session_id
         parameters['module_name'] = module_name
@@ -151,6 +195,14 @@ class SuiteCRM(Singleton):
         }
 
     def get_available_modules(self, filter = 'default'):
+        """
+        Retrieve the list of available modules on the system available to the currently logged in user.
+
+        :param str filter: valid values are: [all, default, mobile].
+        :return: dictionary containing information about modules.
+        :rtype: dict[str, object]
+        :raises SuiteException: if error when retrieving modules from SuiteCRM.
+        """
         parameters = OrderedDict()
         parameters['session'] = self._session_id
         parameters['filter'] = filter
@@ -166,8 +218,8 @@ class SuiteCRM(Singleton):
         return result
 
     def get_relationships(self, module_name, module_id, link_field_name,
-            related_module_query = '', related_fields = [], 
-            related_module_link_name_to_fields_array = [], deleted = False, 
+            related_module_query = '', related_fields = [],
+            related_module_link_name_to_fields_array = [], deleted = False,
             order_by = '', offset = '', limit = ''):
         parameters = OrderedDict()
         parameters['session'] = self._session_id
