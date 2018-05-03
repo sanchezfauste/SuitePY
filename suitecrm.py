@@ -244,12 +244,21 @@ class SuiteCRM(Singleton):
                 )
             )
         previous_offset = None
+        result_count = len(bean_list)
         if offset and limit and offset - limit >= 0:
             previous_offset = offset - limit
+        next_offset = None
+        if limit and result_count == limit:
+            if offset:
+                next_offset = offset + limit
+            else:
+                next_offset = limit
         return {
             "entry_list" : bean_list,
+            "result_count": result_count,
             "previous_offset" : previous_offset,
             "current_offset" : offset if offset else 0,
+            "next_offset": next_offset,
             "current_limit" : limit
         }
 
