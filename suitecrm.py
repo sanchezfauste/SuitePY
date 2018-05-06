@@ -210,6 +210,15 @@ class SuiteCRM(Singleton):
         return result
 
     def get_module_fields(self, module_name, fields = ''):
+        """
+        Retrieve field definitions of a module.
+
+        :param str module_name: the name of the module to return records from.
+        :param list[str] fields: if specified then retrieve definition of specified fields only.
+        :return: field definitions of the specified module.
+        :rtype: dict[str, object]
+        :raises SuiteException: if error when retrieving field definitions from SuiteCRM.
+        """
         parameters = OrderedDict()
         parameters['session'] = self._session_id
         parameters['module_name'] = module_name
@@ -221,6 +230,27 @@ class SuiteCRM(Singleton):
             related_module_query = '', related_fields = [],
             related_module_link_name_to_fields_array = [], deleted = False,
             order_by = '', offset = '', limit = ''):
+        """
+        Retrieve a collection of beans that are related to the specified bean
+        and optionally return relationship data for those related beans.
+
+        :param str module_name: name of the module that the primary record is from.
+        :param str module_id: ID of the bean in the specified module.
+        :param str link_field_name: name of the link field to return records from.
+        :param str related_module_query: a portion of the where clause of the SQL statement to find the related items.
+            The SQL query will already be filtered to only include the beans that are related to the specified bean.
+        :param list[str] related_fields: list of related bean fields to be returned.
+        :param list[dict] related_module_link_name_to_fields_array: for every related bean returned,
+            specify link fields name to fields info for that bean to be returned.
+        :param bool deleted: False if deleted records should not be include,
+            True if deleted records should be included.
+        :param str order_by: SQL ORDER BY clause without the phrase 'ORDER BY'.
+        :param int offset: the result offset to start from.
+        :param int limit: the maximum number of records to return.
+        :return: dict containing results matching criteria.
+        :rtype: dict[str, object]
+        :raises SuiteException: if error when retrieving beans from SuiteCRM instance.
+        """
         parameters = OrderedDict()
         parameters['session'] = self._session_id
         parameters['module_name'] = module_name
@@ -264,6 +294,21 @@ class SuiteCRM(Singleton):
 
     def set_relationship(self, module_name, module_id, link_field_name,
             related_ids, name_value_list = [], delete = False):
+        """
+        Set a single relationship between two beans. The items are related by module name and id.
+
+        :param str module_name: name of the module that the primary record is from.
+        :param str module_id: ID of the bean in the specified module_name.
+        :param str link_field_name: name of the link field which relates to the other
+            module for which the relationship needs to be generated.
+        :param list[str] related_ids: list of related record ids for which relationships needs to be generated.
+        :param dict[str, str] name_value_list: the keys of the array are the SugarBean attributes,
+            the values of the array are the values the attributes should have.
+        :param bool delete: if True delete the relationship and if False add the relationship.
+        :return: how many relationships are deleted, created and failed.
+        :rtype: dict[str, int]
+        :raises SuiteException: if error when relating beans.
+        """
         parameters = OrderedDict()
         parameters['session'] = self._session_id
         parameters['module_name'] = module_name
@@ -275,12 +320,30 @@ class SuiteCRM(Singleton):
         return self._request('set_relationship', parameters)
 
     def get_note_attachment(self, note_id):
+        """
+        Retrieve an attachment from a note.
+
+        :param str note_id: ID of the appropriate Note.
+        :return: the requested attachment.
+        :rtype: dict[str, object]
+        :raises SuiteException: if error when retrieving the attachment from SuiteCRM instance.
+        """
         parameters = OrderedDict()
         parameters['session'] = self._session_id
         parameters['id'] = note_id
         return self._request('get_note_attachment', parameters)
 
     def set_note_attachment(self, note_id, filename, file):
+        """
+        Add or replace the attachment on a Note.
+
+        :param str note_id: ID of the Note containing the attachment.
+        :param str filename: the file name of the attachment.
+        :param str file: the binary contents of the file.
+        :return: the ID of the note.
+        :rtype: dict[str, str]
+        :raises SuiteException: if error when setting the note attachment.
+        """
         parameters = OrderedDict()
         parameters['session'] = self._session_id
         parameters['note'] = {
