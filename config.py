@@ -22,8 +22,18 @@ import ConfigParser
 import os.path
 
 class Config:
+    """
+    This class is used to read from a file the access credentials of a SuiteCRM API.
+
+    This avoids the need of hard-code the credentials in the code.
+    """
 
     def __init__(self, config_file = "suitepy.ini"):
+        """
+        Creates a Config instance loading settings from specified file.
+
+        :param str config_file: file from which the configuration will be read.
+        """
         if os.path.isabs(config_file):
             abs_path = config_file
         else:
@@ -31,23 +41,23 @@ class Config:
             abs_path = os.path.join(BASE_DIR, config_file)
         if os.path.isfile(abs_path):
             print("Loading config from file: " + abs_path)
-            self.load_config_file(abs_path)
+            self._load_config_file(abs_path)
         else:
             print("Creating new config file on: " + abs_path)
             print("Please edit config file and rerun the application.")
-            self.create_config_file(abs_path)
+            self._create_config_file(abs_path)
             exit(0)
 
-    def load_config_file(self, config_file):
+    def _load_config_file(self, config_file):
         config = ConfigParser.ConfigParser()
         config.read(config_file)
-        self.url = config.get("SuiteCRM API Credentials", "url")
-        self.username = config.get("SuiteCRM API Credentials", "username")
-        self.password = config.get("SuiteCRM API Credentials", "password")
-        self.application_name = config.get("SuiteCRM API Credentials", "application_name")
-        self.verify_ssl = bool(config.get("SuiteCRM API Credentials", "verify_ssl"))
+        self._url = config.get("SuiteCRM API Credentials", "url")
+        self._username = config.get("SuiteCRM API Credentials", "username")
+        self._password = config.get("SuiteCRM API Credentials", "password")
+        self._application_name = config.get("SuiteCRM API Credentials", "application_name")
+        self._verify_ssl = bool(config.get("SuiteCRM API Credentials", "verify_ssl"))
 
-    def create_config_file(self, config_file):
+    def _create_config_file(self, config_file):
         config_file = open(config_file, "w")
         config = ConfigParser.ConfigParser()
         config.add_section("SuiteCRM API Credentials")
@@ -58,3 +68,53 @@ class Config:
         config.set("SuiteCRM API Credentials", "verify_ssl", True)
         config.write(config_file)
         config_file.close()
+
+    @property
+    def url(self):
+        """
+        Get SuiteCRM REST API URL.
+
+        :return: SuiteCRM REST API URL
+        :rtype: str
+        """
+        return self._url
+
+    @property
+    def username(self):
+        """
+        Get login username.
+
+        :return: login username.
+        :rtype: str
+        """
+        return self._username
+
+    @property
+    def password(self):
+        """
+        Get login password.
+
+        :return: login password.
+        :rtype: str
+        """
+        return self._password
+
+    @property
+    def application_name(self):
+        """
+        Get application name used when login to SuiteCRM API.
+
+        :return: application name.
+        :rtype: str
+        """
+        return self._application_name
+
+    @property
+    def verify_ssl(self):
+        """
+        Specifies whether the SSL certificate should be verified.
+
+        :return: True if SSL certificate must be verified, False otherwise.
+        :rtype: bool
+        """
+        return self._verify_ssl
