@@ -37,8 +37,8 @@ class Config:
         if os.path.isabs(config_file):
             abs_path = config_file
         else:
-            BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-            abs_path = os.path.join(BASE_DIR, config_file)
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+            abs_path = os.path.join(base_dir, config_file)
         if os.path.isfile(abs_path):
             print("Loading config from file: " + abs_path)
             self._load_config_file(abs_path)
