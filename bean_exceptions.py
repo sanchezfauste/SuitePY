@@ -19,6 +19,9 @@
 #######################################################################
 
 class BeanException(Exception):
+    """
+    Base class for Bean exceptions.
+    """
 
     def __init__(self, description = ''):
         self.description = description
@@ -27,4 +30,8 @@ class BeanException(Exception):
         return self.description
 
 class BeanNotFoundException(BeanException):
+    """
+    Exception raised when requested Bean is not found.
+    """
+
     pass
