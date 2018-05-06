@@ -38,7 +38,8 @@ class SuiteCRM(Singleton):
     _session_id = None
 
     def __init__(self):
-        if not self._session_id: self._login()
+        if not self._session_id:
+            self._login()
 
     def _call(self, method, parameters):
         data = {
