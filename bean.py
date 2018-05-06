@@ -18,12 +18,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #######################################################################
 
+
 class Bean(object):
     """
     This class represents a SuiteCRM Bean.
     """
 
-    def __init__(self, module, name_value_list = {}, relationship_list = []):
+    def __init__(self, module, name_value_list={}, relationship_list=[]):
         self.module = module
         self._fields = {}
         self._set_name_value_list(name_value_list)
@@ -65,7 +66,7 @@ class Bean(object):
         """
         name_value_list = []
         for name, value in self._fields.items():
-            name_value_list.append({'name' : name, 'value' : value})
+            name_value_list.append({'name': name, 'value': value})
         return name_value_list
 
     @property

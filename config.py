@@ -21,6 +21,7 @@
 import ConfigParser
 import os.path
 
+
 class Config:
     """
     This class is used to read from a file the access credentials of a SuiteCRM API.
@@ -28,7 +29,7 @@ class Config:
     This avoids the need of hard-code the credentials in the code.
     """
 
-    def __init__(self, config_file = "suitepy.ini"):
+    def __init__(self, config_file="suitepy.ini"):
         """
         Creates a Config instance loading settings from specified file.
 

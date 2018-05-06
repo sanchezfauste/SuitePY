@@ -25,6 +25,7 @@ from suitecrm import SuiteCRM
 from suite_exceptions import *
 from collections import OrderedDict
 
+
 class SuiteCRMCached(SuiteCRM):
     """
     This class allows you to make cached calls to SuiteCRM.
@@ -49,8 +50,8 @@ class SuiteCRMCached(SuiteCRM):
     def _login(self):
         login_parameters = OrderedDict()
         login_parameters['user_auth'] = {
-            'user_name' : self.conf.username,
-            'password' : self._md5(self.conf.password)
+            'user_name': self.conf.username,
+            'password': self._md5(self.conf.password)
         }
         login_parameters['application_name'] = self.conf.application_name
         login_result = super(SuiteCRMCached, self)._call('login', login_parameters)

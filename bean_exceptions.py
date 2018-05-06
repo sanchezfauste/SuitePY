@@ -18,16 +18,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #######################################################################
 
+
 class BeanException(Exception):
     """
     Base class for Bean exceptions.
     """
 
-    def __init__(self, description = ''):
+    def __init__(self, description=''):
         self.description = description
 
     def __str__(self):
         return self.description
+
 
 class BeanNotFoundException(BeanException):
     """

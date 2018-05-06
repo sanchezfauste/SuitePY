@@ -51,31 +51,56 @@ class SuiteException(Exception):
         :return: the SuiteException that represents the error of result.
         :rtype: SuiteException
         """
-        if not result: return UnknownSuiteException(result)
-        if result['number'] == 0: return NoErrorException(result)
-        if result['number'] == 10: return InvalidLoginException(result)
-        if result['number'] == 11: return InvalidSessionIDException(result)
-        if result['number'] == 12: return UserNotConfiguredException(result)
-        if result['number'] == 20: return ModuleDoesNotExistException(result)
-        if result['number'] == 21: return FileDoesNotExistException(result)
-        if result['number'] == 30: return ModuleNotSupportedException(result)
-        if result['number'] == 31: return RelationshipNotSupportedException(result)
-        if result['number'] == 40: return AccessDeniedException(result)
-        if result['number'] == 50: return DuplicateRecordsException(result)
-        if result['number'] == 51: return NoRecordsException(result)
-        if result['number'] == 52: return CannotAddOfflineClientException(result)
-        if result['number'] == 53: return ClientDeactivatedException(result)
-        if result['number'] == 60: return NumberOfSessionsExceededException(result)
-        if result['number'] == 61: return UpgradeClientException(result)
-        if result['number'] == 70: return AdminCredentialsRequiredException(result)
-        if result['number'] == 80: return CustomFieldTypeNotSupportedException(result)
-        if result['number'] == 81: return CustomFieldPropertyNotSuppliedException(result)
-        if result['number'] == 90: return ResourceManagementErrorException(result)
-        if result['number'] == 1000: return InvalidCallErrorException(result)
-        if result['number'] == 1001: return InvalidDataFormatException(result)
-        if result['number'] == 1005: return InvalidSetCampaignMergeDataException(result)
-        if result['number'] == 1009: return PasswordExpiredException(result)
-        if result['number'] == 1012: return LDAPAuthenticationFailedException(result)
+        if not result:
+            return UnknownSuiteException(result)
+        if result['number'] == 0:
+            return NoErrorException(result)
+        if result['number'] == 10:
+            return InvalidLoginException(result)
+        if result['number'] == 11:
+            return InvalidSessionIDException(result)
+        if result['number'] == 12:
+            return UserNotConfiguredException(result)
+        if result['number'] == 20:
+            return ModuleDoesNotExistException(result)
+        if result['number'] == 21:
+            return FileDoesNotExistException(result)
+        if result['number'] == 30:
+            return ModuleNotSupportedException(result)
+        if result['number'] == 31:
+            return RelationshipNotSupportedException(result)
+        if result['number'] == 40:
+            return AccessDeniedException(result)
+        if result['number'] == 50:
+            return DuplicateRecordsException(result)
+        if result['number'] == 51:
+            return NoRecordsException(result)
+        if result['number'] == 52:
+            return CannotAddOfflineClientException(result)
+        if result['number'] == 53:
+            return ClientDeactivatedException(result)
+        if result['number'] == 60:
+            return NumberOfSessionsExceededException(result)
+        if result['number'] == 61:
+            return UpgradeClientException(result)
+        if result['number'] == 70:
+            return AdminCredentialsRequiredException(result)
+        if result['number'] == 80:
+            return CustomFieldTypeNotSupportedException(result)
+        if result['number'] == 81:
+            return CustomFieldPropertyNotSuppliedException(result)
+        if result['number'] == 90:
+            return ResourceManagementErrorException(result)
+        if result['number'] == 1000:
+            return InvalidCallErrorException(result)
+        if result['number'] == 1001:
+            return InvalidDataFormatException(result)
+        if result['number'] == 1005:
+            return InvalidSetCampaignMergeDataException(result)
+        if result['number'] == 1009:
+            return PasswordExpiredException(result)
+        if result['number'] == 1012:
+            return LDAPAuthenticationFailedException(result)
         return UnknownSuiteException(result)
 
 

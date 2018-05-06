@@ -42,15 +42,15 @@ class SuiteCRM(Singleton):
 
     def _call(self, method, parameters):
         data = {
-            'method' : method,
-            'input_type' : 'JSON',
-            'response_type' : 'JSON',
-            'rest_data' : json.dumps(parameters),
+            'method': method,
+            'input_type': 'JSON',
+            'response_type': 'JSON',
+            'rest_data': json.dumps(parameters),
         }
-        r = requests.post(self.conf.url, data = data, verify = self.conf.verify_ssl)
+        r = requests.post(self.conf.url, data=data, verify=self.conf.verify_ssl)
         r.raise_for_status()
         response = json.loads(r.text, object_pairs_hook=OrderedDict)
-        if (self._call_failed(response)):
+        if self._call_failed(response):
             raise SuiteException.get_suite_exception(response)
         return response
 
@@ -64,14 +64,14 @@ class SuiteCRM(Singleton):
 
     @staticmethod
     def _call_failed(result):
-        return not result or (len(result) == 3 and 'name' in result \
-                and 'description' in result and 'number' in result)
+        return not result or (len(result) == 3 and 'name' in result
+                              and 'description' in result and 'number' in result)
 
     def _login(self):
         login_parameters = OrderedDict()
         login_parameters['user_auth'] = {
-            'user_name' : self.conf.username,
-            'password' : self._md5(self.conf.password)
+            'user_name': self.conf.username,
+            'password': self._md5(self.conf.password)
         }
         login_parameters['application_name'] = self.conf.application_name
         login_result = self._call('login', login_parameters)
@@ -88,8 +88,8 @@ class SuiteCRM(Singleton):
         except:
             return False
 
-    def get_bean(self, module_name, id, select_fields = '',
-            link_name_to_fields_array = '', track_view = ''):
+    def get_bean(self, module_name, id, select_fields='',
+                 link_name_to_fields_array='', track_view=''):
         """
         Retrieve a single Bean based on ID.
 
@@ -113,7 +113,7 @@ class SuiteCRM(Singleton):
         parameters['link_name_to_fields_array'] = link_name_to_fields_array
         parameters['track_view'] = track_view
         result = self._request('get_entry', parameters)
-        if (self._get_bean_failed(result)):
+        if self._get_bean_failed(result):
             error_msg = result['entry_list'][0]['name_value_list'][0]['value']
             raise BeanNotFoundException(error_msg)
         return Bean(
@@ -137,9 +137,9 @@ class SuiteCRM(Singleton):
         bean._set_name_value_list(result['entry_list'])
         bean['id'] = result['id']
 
-    def get_bean_list(self, module_name, query = '', order_by = '',
-            offset = '', select_fields = '', link_name_to_fields_array = '',
-            max_results = '', deleted = '', favorites = ''):
+    def get_bean_list(self, module_name, query='', order_by='',
+                      offset='', select_fields='', link_name_to_fields_array='',
+                      max_results='', deleted='', favorites=''):
         """
         Get list of beans matching criteria.
 
@@ -185,16 +185,16 @@ class SuiteCRM(Singleton):
         except:
             pass
         return {
-            "result_count" : result['result_count'],
-            "total_count" : result['total_count'],
-            "previous_offset" : previous_offset,
-            "current_offset" : offset if offset else 0,
-            "next_offset" : next_offset,
-            "current_limit" : max_results,
-            "entry_list" : bean_list
+            "result_count": result['result_count'],
+            "total_count": result['total_count'],
+            "previous_offset": previous_offset,
+            "current_offset": offset if offset else 0,
+            "next_offset": next_offset,
+            "current_limit": max_results,
+            "entry_list": bean_list
         }
 
-    def get_available_modules(self, filter = 'default'):
+    def get_available_modules(self, filter='default'):
         """
         Retrieve the list of available modules on the system available to the currently logged in user.
 
@@ -209,7 +209,7 @@ class SuiteCRM(Singleton):
         result = self._request('get_available_modules', parameters)
         return result
 
-    def get_module_fields(self, module_name, fields = ''):
+    def get_module_fields(self, module_name, fields=''):
         """
         Retrieve field definitions of a module.
 
@@ -227,9 +227,9 @@ class SuiteCRM(Singleton):
         return result
 
     def get_relationships(self, module_name, module_id, link_field_name,
-            related_module_query = '', related_fields = [],
-            related_module_link_name_to_fields_array = [], deleted = False,
-            order_by = '', offset = '', limit = ''):
+                          related_module_query='', related_fields=[],
+                          related_module_link_name_to_fields_array=[], deleted=False,
+                          order_by='', offset='', limit=''):
         """
         Retrieve a collection of beans that are related to the specified bean
         and optionally return relationship data for those related beans.
@@ -284,16 +284,16 @@ class SuiteCRM(Singleton):
             else:
                 next_offset = limit
         return {
-            "entry_list" : bean_list,
+            "entry_list": bean_list,
             "result_count": result_count,
-            "previous_offset" : previous_offset,
-            "current_offset" : offset if offset else 0,
+            "previous_offset": previous_offset,
+            "current_offset": offset if offset else 0,
             "next_offset": next_offset,
-            "current_limit" : limit
+            "current_limit": limit
         }
 
     def set_relationship(self, module_name, module_id, link_field_name,
-            related_ids, name_value_list = [], delete = False):
+                         related_ids, name_value_list=[], delete=False):
         """
         Set a single relationship between two beans. The items are related by module name and id.
 
@@ -347,8 +347,8 @@ class SuiteCRM(Singleton):
         parameters = OrderedDict()
         parameters['session'] = self._session_id
         parameters['note'] = {
-            'id' : note_id,
-            'filename' : filename,
-            'file' : file
+            'id': note_id,
+            'filename': filename,
+            'file': file
         }
         return self._request('set_note_attachment', parameters)
