@@ -18,9 +18,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #######################################################################
 
+
 class SuiteException(Exception):
+    """
+    Base class for SuiteCRM requests exceptions.
+    """
 
     def __init__(self, data):
+        """
+        Creates an exception with the provided data.
+
+        :param dict[str, str] data: data that specifies the exception.
+        """
         if data:
             self.name = data['name']
             self.description = data['description']
@@ -35,6 +44,13 @@ class SuiteException(Exception):
 
     @staticmethod
     def get_suite_exception(result):
+        """
+        Get a SuiteException from the error specified in the result of a failed API call.
+
+        :param ict[str, str] result: result of a failed API call.
+        :return: the SuiteException that represents the error of result.
+        :rtype: SuiteException
+        """
         if not result: return UnknownSuiteException(result)
         if result['number'] == 0: return NoErrorException(result)
         if result['number'] == 10: return InvalidLoginException(result)
@@ -62,80 +78,198 @@ class SuiteException(Exception):
         if result['number'] == 1012: return LDAPAuthenticationFailedException(result)
         return UnknownSuiteException(result)
 
-class NoErrorException(SuiteException): # Number 0
+
+class NoErrorException(SuiteException):  # Number 0
+    """
+    Exception raised when no error is specified.
+    """
     pass
 
-class InvalidLoginException(SuiteException): # Number 10
+
+class InvalidLoginException(SuiteException):  # Number 10
+    """
+    Exception raised when login is invalid.
+    """
     pass
 
-class InvalidSessionIDException(SuiteException): # Number 11
+
+class InvalidSessionIDException(SuiteException):  # Number 11
+    """
+    Exception raised when session is not valid.
+    """
     pass
 
-class UserNotConfiguredException(SuiteException): # Number 12
+
+class UserNotConfiguredException(SuiteException):  # Number 12
+    """
+    Exception raised when the authenticated user is not configured.
+    """
     pass
 
-class InvalidPortalClientException(SuiteException): # Number 13
+
+class InvalidPortalClientException(SuiteException):  # Number 13
+    """
+    Exception raised when portal client does not have authorized access.
+    """
     pass
 
-class ModuleDoesNotExistException(SuiteException): # Number 20
+
+class ModuleDoesNotExistException(SuiteException):  # Number 20
+    """
+    Exception raised when requested module is not available.
+    """
     pass
 
-class FileDoesNotExistException(SuiteException): # Number 21
+
+class FileDoesNotExistException(SuiteException):  # Number 21
+    """
+    Exception raised when the requested file does not exist on the server.
+    """
     pass
 
-class ModuleNotSupportedException(SuiteException): # Number 30
+
+class ModuleNotSupportedException(SuiteException):  # Number 30
+    """
+    Exception raised when the requested action is not supported on a module.
+    """
     pass
 
-class RelationshipNotSupportedException(SuiteException): # Number 31
+
+class RelationshipNotSupportedException(SuiteException):  # Number 31
+    """
+    Exception raised when a relationship is not supported on a module.
+    """
     pass
 
-class AccessDeniedException(SuiteException): # Number 40
+
+class AccessDeniedException(SuiteException):  # Number 40
+    """
+    Exception raised when logged user does not have
+    permission to perform the requested action.
+    """
     pass
 
-class DuplicateRecordsException(SuiteException): # Number 50
+
+class DuplicateRecordsException(SuiteException):  # Number 50
+    """
+    Exception raised when duplicated records are found.
+    """
     pass
 
-class NoRecordsException(SuiteException): # Number 51
+
+class NoRecordsException(SuiteException):  # Number 51
+    """
+    Exception raised when no records are found.
+    """
     pass
 
-class CannotAddOfflineClientException(SuiteException): # Number 52
+
+class CannotAddOfflineClientException(SuiteException):  # Number 52
+    """
+    Exception raised when is not possible to add offline client.
+    """
     pass
 
-class ClientDeactivatedException(SuiteException): # Number 53
+
+class ClientDeactivatedException(SuiteException):  # Number 53
+    """
+    Exception raised when a client offline instance has been deactivated.
+    """
     pass
 
-class NumberOfSessionsExceededException(SuiteException): # Number 60
+
+class NumberOfSessionsExceededException(SuiteException):  # Number 60
+    """
+    Exception raised when max number of sessions is reached.
+    """
     pass
 
-class UpgradeClientException(SuiteException): # Number 61
+
+class UpgradeClientException(SuiteException):  # Number 61
+    """
+    Exception raised when upgrading an offline client.
+    """
     pass
 
-class AdminCredentialsRequiredException(SuiteException): # Number 70
+
+class AdminCredentialsRequiredException(SuiteException):  # Number 70
+    """
+    Exception raised when the requested action can only be
+    performed by an account with administrator rights.
+    """
     pass
 
-class CustomFieldTypeNotSupportedException(SuiteException): # Number 80
+
+class CustomFieldTypeNotSupportedException(SuiteException):  # Number 80
+    """
+    Exception raised when a custom type is not supported.
+    """
     pass
 
-class CustomFieldPropertyNotSuppliedException(SuiteException): # Number 81
+
+class CustomFieldPropertyNotSuppliedException(SuiteException):  # Number 81
+    """
+    Exception raised when one or more properties are
+    missing for the supplied custom field type.
+    """
     pass
 
-class ResourceManagementErrorException(SuiteException): # Number 90
+
+class ResourceManagementErrorException(SuiteException):  # Number 90
+    """
+    Exception raised when the resource query limit specified in config.php
+    has been exceeded during execution of the request.
+    """
     pass
 
-class InvalidCallErrorException(SuiteException): # Number 1000
+
+class InvalidCallErrorException(SuiteException):  # Number 1000
+    """
+    Exception raised when the requested call is invalid for the given module.
+    """
     pass
 
-class InvalidDataFormatException(SuiteException): # Number 1001
+
+class InvalidDataFormatException(SuiteException):  # Number 1001
+    """
+    Exception raised when the data of a request is invalid.
+    """
     pass
 
-class InvalidSetCampaignMergeDataException(SuiteException): # Number 1005
+
+class InvalidSetCampaignMergeDataException(SuiteException):  # Number 1005
+    """
+    Exception raised when merge action status will not be updated,
+    because, campaign_id is null or no targets were selected.
+    """
     pass
 
-class PasswordExpiredException(SuiteException): # Number 1009
+
+class LockoutReachedException(SuiteException):  # Number 1008
+    """
+    Exception raised when you have been locked out of the Sugar
+    application and cannot log in using existing password.
+    """
     pass
 
-class LDAPAuthenticationFailedException(SuiteException): # Number 1012
+
+class PasswordExpiredException(SuiteException):  # Number 1009
+    """
+    Exception raised when password of logged user is expired.
+    """
     pass
 
-class UnknownSuiteException(SuiteException): # Number 1012
+
+class LDAPAuthenticationFailedException(SuiteException):  # Number 1012
+    """
+    Exception raised when LDAP Authentication failed
+    but supplied password was already encrypted.
+    """
+    pass
+
+
+class UnknownSuiteException(SuiteException):
+    """
+    Exception raised when the request error is unknown.
+    """
     pass
