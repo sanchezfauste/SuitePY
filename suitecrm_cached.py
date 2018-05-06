@@ -26,6 +26,21 @@ from suite_exceptions import *
 from collections import OrderedDict
 
 class SuiteCRMCached(SuiteCRM):
+    """
+    This class allows you to make cached calls to SuiteCRM.
+    When making a request, first look if its in the cache and,
+    if is not on the cache, make the request to SuiteCRM, save it
+    in the cache and finally return the result of the request.
+
+    The cache has a limit of cached requests, when this limit is reached,
+    the request that has not been accessed for a longer time is eliminated.
+
+    This class allows you to make the same calls as the SuiteCRM class.
+    Its the responsibility of the programmer to determine when to
+    use SuiteCRM or SuiteCRMCached, taking into account that the
+    information returned by SuiteCRMCached may not be updated with
+    the existing information on the SuiteCRM instance.
+    """
 
     _cache = {}
     _cache_accessed = {}
@@ -92,5 +107,8 @@ class SuiteCRMCached(SuiteCRM):
             return None
 
     def clear_cache(self):
+        """
+        This method clears all the information stored on the internal cache.
+        """
         self._cache.clear()
         self._cache_accessed.clear()
