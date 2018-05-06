@@ -20,9 +20,7 @@
 
 import json
 import time
-import requests
 from suitecrm import SuiteCRM
-from suite_exceptions import *
 from collections import OrderedDict
 
 
