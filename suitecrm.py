@@ -1,8 +1,8 @@
 #######################################################################
 # Suite PY is a simple Python client for SuiteCRM API.
 
-# Copyright (C) 2017 Marc Sanchez Fauste
-# Copyright (C) 2017 BTACTIC, SCCL
+# Copyright (C) 2017-2018 BTACTIC, SCCL
+# Copyright (C) 2017-2018 Marc Sanchez Fauste
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
