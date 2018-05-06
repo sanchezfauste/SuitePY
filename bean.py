@@ -19,6 +19,9 @@
 #######################################################################
 
 class Bean(object):
+    """
+    This class represents a SuiteCRM Bean.
+    """
 
     def __init__(self, module, name_value_list = {}, relationship_list = []):
         self.module = module
