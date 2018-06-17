@@ -1,6 +1,7 @@
-# SuitePY
+[![readthedocs](https://readthedocs.org/projects/suitepy/badge/?version=latest&style=flat-square)](https://suitepy.readthedocs.io/en/latest/)
+[![GitHub (pre-)release](https://img.shields.io/github/release/sanchezfauste/SuitePY/all.svg?style=flat-square)](https://github.com/sanchezfauste/SuitePY/releases/latest)
 
-[![readthedocs](https://readthedocs.org/projects/suitepy/badge/?version=latest)](https://suitepy.readthedocs.io/en/latest/)
+# SuitePY
 
 Suite PY is a simple Python client for SuiteCRM API.
 
