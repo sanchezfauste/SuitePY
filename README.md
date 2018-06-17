@@ -1,3 +1,4 @@
+[![license](https://img.shields.io/github/license/sanchezfauste/SuitePY.svg?style=flat-square)](LICENSE)
 [![readthedocs](https://readthedocs.org/projects/suitepy/badge/?version=latest&style=flat-square)](https://suitepy.readthedocs.io/en/latest/)
 [![GitHub (pre-)release](https://img.shields.io/github/release/sanchezfauste/SuitePY/all.svg?style=flat-square)](https://github.com/sanchezfauste/SuitePY/releases/latest)
 
