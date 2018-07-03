@@ -111,3 +111,12 @@ class SuiteCRMCached(SuiteCRM):
         """
         self._cache.clear()
         self._cache_accessed.clear()
+
+    def get_number_of_cached_calls(self):
+        """
+        Get the number of cached calls.
+
+        :return: number of cached calls.
+        :rtype: int
+        """
+        return len(self._cache)
