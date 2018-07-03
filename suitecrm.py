@@ -353,3 +353,21 @@ class SuiteCRM(Singleton):
             'file': file
         }
         return self._request('set_note_attachment', parameters)
+
+    def get_pdf_template(self, template_id, bean_module, bean_id):
+        """
+        Retrieve PDF Template for a given module record.
+        
+        :param str template_id: template ID used to generate PDF.
+        :param str bean_module: module name of the bean that will be used to populate PDF.
+        :param str bean_id: ID of the bean record.
+        :return: the generated PDF.
+        :rtype: dict[str, str]
+        :raises SuiteException: if error when retrieving PDF.
+        """
+        parameters = OrderedDict()
+        parameters['session'] = self._session_id
+        parameters['template_id'] = template_id
+        parameters['bean_module'] = bean_module
+        parameters['bean_id'] = bean_id
+        return self._request('get_pdf_template', parameters)
