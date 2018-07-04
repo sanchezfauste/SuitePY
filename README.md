@@ -23,3 +23,9 @@ virtualenv env
 source env/bin/activate
 pip install -r requirements.txt
 ```
+
+## PDF Templates support
+To be able to use get_pdf_template method, you need to install a custom WebService on your SuiteCRM instance:
+
+1. Download zip of [latest SuitePY-service release](https://github.com/sanchezfauste/SuitePY-service/releases/latest) and install it using Module Loader.
+2. Edit `suitepy.ini` config file and change the `url` parameter to `https://crm.example.com/custom/service/suitepy/rest.php`.
