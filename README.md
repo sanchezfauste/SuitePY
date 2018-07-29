@@ -1,6 +1,7 @@
 [![license](https://img.shields.io/github/license/sanchezfauste/SuitePY.svg?style=flat-square)](LICENSE)
 [![readthedocs](https://readthedocs.org/projects/suitepy/badge/?version=latest&style=flat-square)](https://suitepy.readthedocs.io/en/latest/)
 [![GitHub (pre-)release](https://img.shields.io/github/release/sanchezfauste/SuitePY/all.svg?style=flat-square)](https://github.com/sanchezfauste/SuitePY/releases/latest)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7e38151ed08e483a9c0bb8dc3ce339e0)](https://www.codacy.com/app/sanchezfauste/SuitePY?utm_source=github.com&utm_medium=referral&utm_content=sanchezfauste/SuitePY&utm_campaign=Badge_Grade)
 
 # SuitePY
 
