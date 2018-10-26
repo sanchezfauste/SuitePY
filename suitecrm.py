@@ -83,8 +83,8 @@ class SuiteCRM(Singleton):
         self._session_id = login_result['id']
 
     @staticmethod
-    def _md5(input):
-        return hashlib.md5(input.encode('utf8')).hexdigest()
+    def _md5(text):
+        return hashlib.md5(text.encode('utf8')).hexdigest()
 
     @staticmethod
     def _get_bean_failed(result):
