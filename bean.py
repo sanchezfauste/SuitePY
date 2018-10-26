@@ -34,7 +34,7 @@ class Bean(object):
             self._set_relationship_list(relationship_list)
 
     def _set_name_value_list(self, name_value_list):
-        for key, value in name_value_list.items():
+        for value in name_value_list.values():
             self._fields[value['name']] = value['value']
 
     def _set_relationship_list(self, relationship_list):
