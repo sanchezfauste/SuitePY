@@ -62,7 +62,8 @@ class Config:
         self._verify_ssl = bool(config.get(
             "SuiteCRM API Credentials", "verify_ssl"))
 
-    def _create_config_file(self, config_file):
+    @staticmethod
+    def _create_config_file(config_file):
         config_file = open(config_file, "w")
         config = ConfigParser.ConfigParser()
         config.add_section("SuiteCRM API Credentials")
