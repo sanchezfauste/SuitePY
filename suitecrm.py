@@ -188,7 +188,7 @@ class SuiteCRM(Singleton):
         try:
             if int(result['next_offset']) < int(result['total_count']):
                 next_offset = result['next_offset']
-        except:
+        except Exception:
             pass
         return {
             "result_count": result['result_count'],
