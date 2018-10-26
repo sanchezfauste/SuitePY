@@ -80,7 +80,7 @@ class SuiteCRMCached(SuiteCRM):
                 else:
                     oldest_accessed = (key, timestamp)
             return oldest_accessed[0]
-        except:
+        except Exception:
             return None
 
     def _remove_oldest_cached_requests(self):
@@ -97,7 +97,7 @@ class SuiteCRMCached(SuiteCRM):
             self._cache_accessed[key] = self._get_time()
             self._remove_oldest_cached_requests()
             return True
-        except:
+        except Exception:
             return False
 
     def _get_cached_call(self, method, parameters):
@@ -106,7 +106,7 @@ class SuiteCRMCached(SuiteCRM):
             cached_response = self._cache[key]
             self._cache_accessed[key] = self._get_time()
             return cached_response
-        except:
+        except Exception:
             return None
 
     def clear_cache(self):
