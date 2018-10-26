@@ -67,7 +67,8 @@ class SuiteCRMCached(SuiteCRM):
             self._add_call_to_cache(method, parameters, response)
             return response
 
-    def _get_time(self):
+    @staticmethod
+    def _get_time():
         return time.time()
 
     def _get_oldest_accessed_cache_key(self):
