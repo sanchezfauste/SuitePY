@@ -233,8 +233,8 @@ class SuiteCRM(Singleton):
         return result
 
     def get_relationships(self, module_name, module_id, link_field_name,
-                          related_module_query='', related_fields=[],
-                          related_module_link_name_to_fields_array=[], deleted=False,
+                          related_module_query='', related_fields=None,
+                          related_module_link_name_to_fields_array=None, deleted=False,
                           order_by='', offset='', limit=''):
         """
         Retrieve a collection of beans that are related to the specified bean
@@ -263,8 +263,9 @@ class SuiteCRM(Singleton):
         parameters['module_id'] = module_id
         parameters['link_field_name'] = link_field_name
         parameters['related_module_query'] = related_module_query
-        parameters['related_fields'] = related_fields
-        parameters['related_module_link_name_to_fields_array'] = related_module_link_name_to_fields_array
+        parameters['related_fields'] = related_fields or []
+        parameters['related_module_link_name_to_fields_array'] = \
+            related_module_link_name_to_fields_array or []
         parameters['deleted'] = deleted
         parameters['order_by'] = order_by
         parameters['offset'] = offset
@@ -300,7 +301,7 @@ class SuiteCRM(Singleton):
         }
 
     def set_relationship(self, module_name, module_id, link_field_name,
-                         related_ids, name_value_list=[], delete=False):
+                         related_ids, name_value_list=None, delete=False):
         """
         Set a single relationship between two beans. The items are related by module name and id.
 
@@ -322,7 +323,7 @@ class SuiteCRM(Singleton):
         parameters['module_id'] = module_id
         parameters['link_field_name'] = link_field_name
         parameters['related_ids'] = related_ids
-        parameters['name_value_list'] = name_value_list
+        parameters['name_value_list'] = name_value_list or []
         parameters['delete'] = delete
         return self._request('set_relationship', parameters)
 
