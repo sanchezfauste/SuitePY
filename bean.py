@@ -24,12 +24,14 @@ class Bean(object):
     This class represents a SuiteCRM Bean.
     """
 
-    def __init__(self, module, name_value_list={}, relationship_list=[]):
+    def __init__(self, module, name_value_list=None, relationship_list=None):
         self.module = module
         self._fields = {}
-        self._set_name_value_list(name_value_list)
+        if name_value_list:
+            self._set_name_value_list(name_value_list)
         self._relationship_list = {}
-        self._set_relationship_list(relationship_list)
+        if relationship_list:
+            self._set_relationship_list(relationship_list)
 
     def _set_name_value_list(self, name_value_list):
         for key, value in name_value_list.items():
