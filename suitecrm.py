@@ -90,7 +90,7 @@ class SuiteCRM(Singleton):
     def _get_bean_failed(result):
         try:
             return result['entry_list'][0]['name_value_list'][0]['name'] == 'warning'
-        except:
+        except Exception:
             return False
 
     def get_bean(self, module_name, id, select_fields='',
