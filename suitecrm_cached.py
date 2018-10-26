@@ -52,7 +52,10 @@ class SuiteCRMCached(SuiteCRM):
             'password': self._md5(self.conf.password)
         }
         login_parameters['application_name'] = self.conf.application_name
-        login_result = super(SuiteCRMCached, self)._call('login', login_parameters)
+        login_result = super(SuiteCRMCached, self)._call(
+            'login',
+            login_parameters
+        )
         self._session_id = login_result['id']
 
     def _call(self, method, parameters):

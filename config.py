@@ -55,14 +55,22 @@ class Config:
         self._url = config.get("SuiteCRM API Credentials", "url")
         self._username = config.get("SuiteCRM API Credentials", "username")
         self._password = config.get("SuiteCRM API Credentials", "password")
-        self._application_name = config.get("SuiteCRM API Credentials", "application_name")
-        self._verify_ssl = bool(config.get("SuiteCRM API Credentials", "verify_ssl"))
+        self._application_name = config.get(
+            "SuiteCRM API Credentials",
+            "application_name"
+        )
+        self._verify_ssl = bool(config.get(
+            "SuiteCRM API Credentials", "verify_ssl"))
 
     def _create_config_file(self, config_file):
         config_file = open(config_file, "w")
         config = ConfigParser.ConfigParser()
         config.add_section("SuiteCRM API Credentials")
-        config.set("SuiteCRM API Credentials", "url", "https://example.org/service/v4_1/rest.php")
+        config.set(
+            "SuiteCRM API Credentials",
+            "url",
+            "https://example.org/service/v4_1/rest.php"
+        )
         config.set("SuiteCRM API Credentials", "username", "api")
         config.set("SuiteCRM API Credentials", "password", "123456")
         config.set("SuiteCRM API Credentials", "application_name", "SuitePY")

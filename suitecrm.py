@@ -48,7 +48,11 @@ class SuiteCRM(Singleton):
             'response_type': 'JSON',
             'rest_data': json.dumps(parameters),
         }
-        r = requests.post(self.conf.url, data=data, verify=self.conf.verify_ssl)
+        r = requests.post(
+            self.conf.url,
+            data=data,
+            verify=self.conf.verify_ssl
+        )
         r.raise_for_status()
         response = json.loads(r.text, object_pairs_hook=OrderedDict)
         if self._call_failed(response):
@@ -120,7 +124,8 @@ class SuiteCRM(Singleton):
         return Bean(
             module_name,
             result['entry_list'][0]['name_value_list'],
-            result['relationship_list'][0] if len(result['relationship_list']) > 0 else []
+            result['relationship_list'][0] if len(
+                result['relationship_list']) > 0 else []
         )
 
     def save_bean(self, bean):
@@ -271,7 +276,8 @@ class SuiteCRM(Singleton):
                 Bean(
                     entry['module_name'],
                     entry['name_value_list'],
-                    result['relationship_list'][i] if len(result['relationship_list']) > i else []
+                    result['relationship_list'][i] if len(
+                        result['relationship_list']) > i else []
                 )
             )
         previous_offset = None
@@ -357,7 +363,7 @@ class SuiteCRM(Singleton):
     def get_pdf_template(self, template_id, bean_module, bean_id):
         """
         Retrieve PDF Template for a given module record.
-        
+
         :param str template_id: template ID used to generate PDF.
         :param str bean_module: module name of the bean that will be used to populate PDF.
         :param str bean_id: ID of the bean record.
