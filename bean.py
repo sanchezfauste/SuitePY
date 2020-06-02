@@ -99,12 +99,12 @@ class Bean(object):
 
     def show(self):
         """Prints a representation of bean information."""
-        print self.module
+        print(self.module)
         for key, value in self._fields.items():
-            print '\t', key, ':', value
+            print('\t', key, ':', value)
         for relationship, records in self._relationship_list.items():
-            print '\t', relationship, ':'
+            print('\t', relationship, ':')
             for record in records:
                 for key, value in record.items():
-                    print '\t\t', key, ':', value
-                print '\t\t---- ---- ---- ---- ---- ---- ---- ----'
+                    print('\t\t', key, ':', value)
+                print('\t\t---- ---- ---- ---- ---- ---- ---- ----')

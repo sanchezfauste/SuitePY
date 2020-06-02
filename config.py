@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #######################################################################
 
-import ConfigParser
+import configparser
 import os.path
 
 
@@ -50,7 +50,7 @@ class Config:
             exit(0)
 
     def _load_config_file(self, config_file):
-        config = ConfigParser.ConfigParser()
+        config = configparser.ConfigParser()
         config.read(config_file)
         self._url = config.get("SuiteCRM API Credentials", "url")
         self._username = config.get("SuiteCRM API Credentials", "username")
@@ -65,7 +65,7 @@ class Config:
     @staticmethod
     def _create_config_file(config_file):
         config_file = open(config_file, "w")
-        config = ConfigParser.ConfigParser()
+        config = configparser.ConfigParser()
         config.add_section("SuiteCRM API Credentials")
         config.set(
             "SuiteCRM API Credentials",

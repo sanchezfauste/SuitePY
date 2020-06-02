@@ -20,7 +20,7 @@
 
 import json
 import time
-from suitecrm import SuiteCRM
+from .suitecrm import SuiteCRM
 from collections import OrderedDict
 
 

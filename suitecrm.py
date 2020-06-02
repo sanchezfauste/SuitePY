@@ -22,11 +22,11 @@ import requests
 import hashlib
 import json
 from collections import OrderedDict
-from suite_exceptions import *
-from bean import Bean
-from bean_exceptions import *
-from config import Config
-from singleton import Singleton
+from .suite_exceptions import *
+from .bean import Bean
+from .bean_exceptions import *
+from .config import Config
+from .singleton import Singleton
 
 
 class SuiteCRM(Singleton):
